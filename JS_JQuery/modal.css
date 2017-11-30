@@ -1,0 +1,77 @@
+*{
+    box-sizing:border-box;
+}
+.modal {
+    position:fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+}
+.hidden{
+    display:none;
+}
+.modal .overlay{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color:rgba(0,0,0,0.45);
+    opacity:0;
+    transition:opacity 500ms;
+}
+.modal .modal-content{
+    position: fixed;
+    top:1%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    background-color: #FEFEFE;
+    padding:4vh 5vw;
+    width:80vw;
+    max-width:800px;
+    opacity:0;
+    transition:top 250ms, opacity 250ms;
+    
+}
+.modal:hover .modal-content{
+    position: fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%, -50%);
+    background-color: #FEFEFE;
+    padding:4vh 5vw;
+    width:80vw;
+    max-width:800px;
+    opacity:1;
+    transition:top 1s, opacity 1s;
+    
+}
+.modal:hover .overlay{
+    opacity:1;
+}
+.actions {
+    margin-top:20px;
+    border-top:1px solid lightgrey;
+    padding-top:20px;
+    display:flex;
+    justify-content:flex-end;
+}
+.actions button{
+    padding:5px 15px;
+    border:1px solid #aaa;
+    background-color:#EEE;
+    border-radius:2px;
+    box-shadow:2px 2px 6px #BBB;
+    cursor:pointer;
+    text-decoration:none;
+    transition:box-shadow 100ms ease-in-out, background-color 250ms linear,color 250ms, border 250ms;
+}
+.actions button:hover{
+    border:1px solid #7C7;
+    background-color:#9F9;
+    color:#272;
+}
+.actions button:active{
+    box-shadow:0 0 0 #000;
+}

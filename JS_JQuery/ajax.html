@@ -1,0 +1,108 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="content-type" Content="fr">
+        <title>Background - Coding Pool 3</title>
+        <link rel="stylesheet" href="bckground.css">
+        <style>
+            div{
+                display:none;
+            }
+            li{width:1000px;margin:10px;}
+            li button{float:right;}
+            .active{
+                display:block;
+            }
+            section.comments{
+                background-color:aliceblue;
+            }
+            aside{
+                background-color: aquamarine;
+                position:absolute;
+                right:0;top: 0;
+                width:500px;
+                height:auto;
+            }
+        </style>
+    </head>
+    <body>
+       <div class="home active">
+        <h1>Listes des articles</h1>
+            <ul id="posts">
+                
+            </ul>
+        </div>
+        <div class="article">
+            
+        </div>
+        <aside class="info-user">
+            <h1>Info auteurs</h1>
+        </aside>
+        <section class="comments">
+            <h1>Commentaires :</h1>
+        </section>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script>
+            (function($){
+                $.ajax(`https://jsonplaceholder.typicode.com/posts`).done(data => {
+                   let posts = $('#posts');
+                    for(let i = 0; i<data.length; i++){
+                        let elem = $("<li>");
+                        elem.text(data[i].title);
+                        elem.append(`<button data-id="${data[i].id}">Voir l'article</button>`);
+                        posts.append(elem);
+                    } 
+                });
+                $(document).on('click','button', event =>{
+                    $(".home").removeClass("active");
+                    $(".article").addClass("active");
+                    let id = $(event.target).data("id");
+                    $.ajax(`https://jsonplaceholder.typicode.com/posts/${id}`).done(data =>{
+                        let divarticle = $(".article");
+                        let sectionComment = $('.comments');
+                        let infoUser = $('.info-user');
+                        
+                        let title = $('<h1>');
+                        title.append(data.title);
+                        divarticle.append(title);
+                        
+                        
+                        let body = $('<p>');
+                        body.append(data.body);
+                        divarticle.append(body);
+                        
+                        
+                        $.ajax(`https://jsonplaceholder.typicode.com/users/${id}`).done(data =>{
+                            divarticle.append(data.name);
+                            infoUser.append(data.name+"<br/>"+data.username+"<br/>"+data.address.city+"<br/>"+data.phone+"<br/>"+data.website);
+                        });
+//                        let user = $('<aside>');
+//                        user.append(data.user);
+//                        divarticle.append(user);
+//                        
+//                        console.log(data.user);
+                        
+                        $.ajax(`https://jsonplaceholder.typicode.com/posts/${id}/comments`).done(comment =>{
+                            let userComment = $('<strong>');
+                            for(let i = 0;i<comment.length;i++){
+                                sectionComment.append("E-mail : "+comment[i].email+"<br/>");
+                                sectionComment.append("Commentaire : "+comment[i].body+"<br/><br/>");
+                            }
+//                            userComment.append(comment.name);
+//                            console.log(comment);
+//                            sectionComment.append(userComment);
+//                            
+//                            let emailComment = $('<i>');
+//                            emailComment.append(comment.email);
+//                            sectionComment.append(emailComment);
+//                            
+//                            let bodyComment = $('<blockquote>');
+//                            bodyComment.append(comment.body);
+//                            sectionComment.append(bodyComment);
+                        });
+                    });
+                });
+            })(jQuery)
+        </script>
+    </body>
+</html>

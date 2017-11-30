@@ -1,0 +1,14 @@
+.hidden{
+    display:none;
+}
+
+.container{
+    display:inline-block;
+}
+
+.content{
+    display:none;
+}
+.active{
+    display:block;
+}
